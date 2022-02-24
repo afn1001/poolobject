@@ -51,10 +51,32 @@ public class ReusablePoolTest {
 
 	/**
 	 * Test method for {@link ubu.gii.dass.c01.ReusablePool#acquireReusable()}.
+	 * @throws NotFreeInstanceException 
 	 */
 	@Test
-	public void testAcquireReusable() {
-		fail("Not yet implemented");
+	public void testAcquireReusable() throws NotFreeInstanceException {
+		Reusable reus1 = null;
+		Reusable reus2 = null;
+
+		// ReusablePool pueden tener 2 Reusable
+		reus1 = pool.acquireReusable();
+		reus2 = pool.acquireReusable();
+
+		// No son nulos
+		assertNotNull(reus1);
+		assertNotNull(reus2);
+		
+		// Los objetos devueltos son instancias de ReusablePool
+		assertTrue(reus1 instanceof Reusable);
+		assertTrue(reus2 instanceof Reusable);
+
+		// Si no queda espacio libre el ReusablePool devuelve una excepcion
+		try {
+			Reusable reus3 = pool.acquireReusable();
+		} catch (Exception e) {
+
+			assertTrue(e instanceof NotFreeInstanceException);
+		}
 	}
 
 	/**
